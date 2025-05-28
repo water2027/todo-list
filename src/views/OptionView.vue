@@ -4,6 +4,6 @@
 
 <template>
     <div class="view-root">
-        home
+        option
     </div>
 </template>

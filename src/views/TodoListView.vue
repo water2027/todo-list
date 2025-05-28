@@ -3,7 +3,5 @@
 </script>
 
 <template>
-    <div class="view-root">
-        home
-    </div>
+    <div class="view-root"></div>
 </template>

@@ -1,4 +1,6 @@
-html, body, #app {
+html,
+body,
+#app {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -7,4 +9,9 @@ html, body, #app {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.view-root {
+  width: 100%;
+  height: 100%;
 }
