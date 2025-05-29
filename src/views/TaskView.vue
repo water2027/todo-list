@@ -38,14 +38,27 @@ function addTask() {
       type: 'date',
     },
     {
+      id: 'time',
+      label: '时间',
+      type: 'time',
+    },
+    {
       id: 'detail',
       label: '详情',
-      type: 'textarea',
+      type: 'text',
     },
   ] as const,
   )
-    .then(data=>{
-        
+    .then((data) => {
+      const { title, deadline, time, detail } = data
+      const date = new Date(`${deadline} ${time}`)
+      tasks.push({
+        id: title,
+        title,
+        deadline: date.toLocaleString(),
+        detail,
+        status: 'todo',
+      })
     })
     .catch(console.error)
 }

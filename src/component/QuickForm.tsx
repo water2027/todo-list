@@ -5,7 +5,7 @@ import { useQuickComponent } from '../composables/useQuickComponent'
 export interface FormProps {
   id: string
   label?: string // 默认与 id 相同
-  type: string
+  type: 'text' | 'time' | 'date' | 'number' | 'color' 
 }
 
 export interface QuickFormProps {
@@ -39,15 +39,15 @@ const QuickForm = defineComponent({
       close()
     }
     return () => (
-      <form class="flex flex-col rounded-xl bg-white p-4" onSubmit={onsubmit}>
+      <form class="flex flex-col rounded-xl bg-white p-6" onSubmit={onsubmit}>
         {formData.map(item => (
-          <div key={item.id}>
-            <label for={item.id}>{item.label || item.id}</label>
-            <input id={item.id} name={item.id} type={item.type} />
+          <div class="p-1" key={item.id}>
+            <label class="mx-2" for={item.id}>{item.label || item.id}</label>
+            <input class="mx-2 my-1 border-b-1 border-b-black" id={item.id} name={item.id} type={item.type} />
           </div>
         ))}
-        <button type="submit">Submit</button>
-        <button onClick={quit} type="button" class="mx-a aspect-square w-fit rounded-full bg-blueGray p-2 transition-all duration-200 hover:bg-coolgray-6">X</button>
+        <button class="mx-a my-1 w-fit border-2 border-black rounded-xl p-1 hover:bg-coolgray-6" type="submit">Submit</button>
+        <button onClick={quit} type="button" class="mx-a my-1 aspect-square w-fit border-2 border-black rounded-full p-2 transition-all duration-200 hover:bg-coolgray-6">X</button>
       </form>
     )
   },
@@ -80,7 +80,7 @@ export function useQuickForm<T extends readonly FormProps[]>(props: T): Promise<
   }
 
   useQuickComponent(QuickForm, {
-    ...props,
+    formData: props,
     onSubmit,
   })
   return p
