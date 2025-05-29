@@ -39,7 +39,7 @@ function toggleSidebar() {
 <template>
   <div class="h-full w-full flex flex-row">
     <div class="relative flex flex-col bg-gray-600 text-white transition-all duration-200" :class="{ 'w-1/5': isShow, 'w-0': !isShow }">
-      <button class="absolute left-100% top-50 w-10 translate-y-100% rounded-full bg-blue-500 p-2 transition-all duration-200 -translate-x-5" hover="bg-black transform-translate-x-1" @click="toggleSidebar">
+      <button class="absolute left-100% top-50 w-10 translate-y-100% rounded-full bg-blue-500 p-2 transition-all duration-200 -translate-x-5" hover="bg-black" :class="{'hover:transform-translate-x-1': !isShow}" @click="toggleSidebar">
         {{ isShow ? '<-' : '->' }}
       </button>
       <div class="block w-full border-b border-b p-1.5 py-2 text-center" :class="{ hidden: !isShow }">

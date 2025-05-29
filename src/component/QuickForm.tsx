@@ -21,54 +21,67 @@ const QuickForm = defineComponent({
       required: true,
     },
     close: {
-      type: Function,
+      type: Function as PropType<(data?: Event) => void>,
       required: true,
     },
     onSubmit: {
-      type: Function as PropType<(data?: Event) => void>,
+      type: Function as PropType<(data?: Event, quit?: boolean) => void>,
       required: true,
     },
   },
   setup({ formData, onSubmit, close }) {
-    const onsubmit = () => {
-      onSubmit()
+    const onsubmit = (event: Event) => {
+      onSubmit(event)
+      close()
+    }
+    const quit = () => {
+      onSubmit(undefined, true)
       close()
     }
     return () => (
-      <form onSubmit={onsubmit}>
+      <form class="flex flex-col rounded-xl bg-white p-4" onSubmit={onsubmit}>
         {formData.map(item => (
           <div key={item.id}>
             <label for={item.id}>{item.label || item.id}</label>
-            <input id={item.id} type={item.type} />
+            <input id={item.id} name={item.id} type={item.type} />
           </div>
         ))}
         <button type="submit">Submit</button>
+        <button onClick={quit} type="button" class="mx-a aspect-square w-fit rounded-full bg-blueGray p-2 transition-all duration-200 hover:bg-coolgray-6">X</button>
       </form>
     )
   },
 })
 
-export function useQuickForm(props: QuickFormProps) {
-  let resolve: (arg0: unknown) => void
-//   , reject: (arg0: unknown) => void
-  const p = new Promise((res, _rej) => {
+type Result<T extends readonly FormProps[]> = {
+  [K in T[number]['id']]: string
+}
+
+export function useQuickForm<T extends readonly FormProps[]>(props: T): Promise<Result<T>> {
+  let resolve: (arg0: Result<T>) => void,
+    reject: (arg0: unknown) => void
+  const p = new Promise<Result<T>>((res, rej) => {
     resolve = res
-    // reject = rej
+    reject = rej
   })
 
-  const onsubmit = (event: Event) => {
+  const onSubmit = (event: Event, quit?: boolean) => {
+    if (quit) {
+      reject(new Error('Form submission cancelled'))
+      return
+    }
     event.preventDefault()
     const formData = new FormData(event.target as HTMLFormElement)
     const data: Record<string, any> = {}
     formData.forEach((value, key) => {
       data[key] = value
     })
-    resolve(data)
+    resolve(data as Result<T>)
   }
 
   useQuickComponent(QuickForm, {
     ...props,
-    onsubmit,
+    onSubmit,
   })
   return p
 }

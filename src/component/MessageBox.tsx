@@ -1,11 +1,12 @@
-import { defineComponent, PropType } from 'vue'
-import MarkdownContainer from './MarkdownContainer.vue'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 import { useQuickComponent } from '@/composables/useQuickComponent'
+import MarkdownContainer from './MarkdownContainer.vue'
 
 export interface MessageBoxProps {
-    title: string
-    message: string
-    date?: string
+  title: string
+  message: string
+  date?: string
 }
 
 const MessageBox = defineComponent({
@@ -24,23 +25,23 @@ const MessageBox = defineComponent({
       default: '',
     },
     close: {
-        type: Function as PropType<() => void>,
-        required: true,
-    }
+      type: Function as PropType<() => void>,
+      required: true,
+    },
   },
   setup(props) {
     const { title, message, date, close } = props
     return () => (
-      <div class="h-full w-3/5 flex flex-col bg-white p-2 pb-4 overflow-auto">
+      <div class="h-full w-3/5 flex flex-col overflow-auto bg-white p-2 pb-4">
         <h3 class="text-center">{title}</h3>
         <h4 class="text-center">{date && new Date(date).toLocaleDateString()}</h4>
         <MarkdownContainer content={message} />
-        <button onClick={close} class="bg-blueGray w-fit p-2 rounded-full mx-a aspect-square hover:bg-coolgray-6 transition-all duration-200">X</button>
+        <button onClick={close} class="mx-a aspect-square w-fit rounded-full bg-blueGray p-2 transition-all duration-200 hover:bg-coolgray-6">X</button>
       </div>
     )
   },
 })
 
-export const useMessageBox = (props: MessageBoxProps) => {
-    useQuickComponent(MessageBox, props)
+export function useMessageBox(props: MessageBoxProps) {
+  useQuickComponent(MessageBox, props)
 }
