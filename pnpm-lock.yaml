@@ -15,7 +15,7 @@ importers:
         specifier: ^2
         version: 2.2.7
       '@tauri-apps/plugin-sql':
-        specifier: ~2
+        specifier: ~2.2.0
         version: 2.2.0
       '@vitejs/plugin-vue-jsx':
         specifier: ^4.2.0

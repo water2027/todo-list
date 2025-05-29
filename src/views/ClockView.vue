@@ -39,7 +39,6 @@ const text = computed(() => {
       <h2>时钟</h2>
     </header>
     <form class="mx-a" @submit.prevent="setTime">
-      <!-- 这里放一个input和按钮吧 -->
       <input v-model="hour" type="number" min="0" max="23" placeholder="Hour">
       <span>小时</span>
       <input v-model="minute" type="number" min="0" max="59" placeholder="Minute">
