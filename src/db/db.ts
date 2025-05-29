@@ -5,7 +5,7 @@ let db: Database
 export async function initDb() {
   try {
     if (!db) {
-      db = await Database.load('sqlite3: todo_list.db')
+      db = await Database.load('sqlite:todo_list.db')
     }
   }
   catch (error) {

@@ -32,12 +32,12 @@ class TaskModel {
       [limit, offset],
     )
     return result.map(row => ({
-      id: row.id.toString(),
+      id: row.id!.toString(),
       deadline: row.deadline,
       title: row.title,
       detail: row.detail,
       status: row.status,
-    }))
+    })).sort((a, b) => new Date(b.deadline).getTime() - new Date(a.deadline).getTime())
   }
 
   static async deleteTask(id: string) {

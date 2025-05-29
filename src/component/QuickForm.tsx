@@ -6,6 +6,7 @@ export interface FormProps {
   id: string
   label?: string // 默认与 id 相同
   type: 'text' | 'time' | 'date' | 'number' | 'color' 
+  value?: string // 可选，默认值
 }
 
 export interface QuickFormProps {
@@ -43,7 +44,7 @@ const QuickForm = defineComponent({
         {formData.map(item => (
           <div class="p-1" key={item.id}>
             <label class="mx-2" for={item.id}>{item.label || item.id}</label>
-            <input class="mx-2 my-1 border-b-1 border-b-black" id={item.id} name={item.id} type={item.type} />
+            <input class="mx-2 my-1 border-b-1 border-b-black" id={item.id} name={item.id} type={item.type} value={item.value || ''} />
           </div>
         ))}
         <button class="mx-a my-1 w-fit border-2 border-black rounded-xl p-1 hover:bg-coolgray-6" type="submit">Submit</button>
